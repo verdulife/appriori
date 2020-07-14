@@ -4,6 +4,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import autoPreprocess from "svelte-preprocess";
+import scss from "rollup-plugin-scss";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -16,6 +17,10 @@ export default {
     file: "public/build/bundle.js",
   },
   plugins: [
+    scss({
+      output: "./public/build/verdu.css",
+      watch: ["./node_modules/verdu/fonts/", "./node_modules/verdu/scss@dom/"],
+    }),
     svelte({
       // enable run-time checks when not in production
       dev: !production,
