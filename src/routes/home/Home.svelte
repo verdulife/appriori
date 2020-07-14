@@ -18,8 +18,16 @@
   }
 
   function makeList() {
+    let arr = plainList.split("\n");
+
+    arr = arr.map((el) => {
+      return {
+        title: el,
+      };
+    });
+
     let list = {
-      items: plainList.split("\n"),
+      items: arr,
       created: Date.now(),
     };
 

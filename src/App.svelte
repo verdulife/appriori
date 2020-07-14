@@ -1,12 +1,11 @@
 <script>
   import { onMount } from "svelte";
-  import "verdu/fonts/circular.css";
-  import "verdu/bundle.scss";
-  import "verdu/utils@dom.js";
   import { Router, Route, links } from "svelte-routing";
   import Home from "./routes/home/Home.svelte";
   import List from "./routes/list/List.svelte";
   import About from "./routes/about/About.svelte";
+  import "verdu/fonts/circular.css";
+  import "verdu/bundle.scss";
 
   export let url = "";
   let current = "/";
