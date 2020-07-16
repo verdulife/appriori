@@ -36,7 +36,8 @@
     modal = true;
 
     if (list_value.can_discard) {
-      title_message = "Vamos a descartar algunos items de la lista (Si quieres)";
+      title_message =
+        "Vamos a descartar algunos items de la lista (Si quieres)";
       isDiscard();
     } else {
       title_message = "¡A priorizar sea dicho!";
@@ -55,20 +56,6 @@
     }
   }
 
-  function monkeySort() {
-    console.log(arr);
-    list_value.can_discard = false;
-
-    setTimeout(() => {
-      title_message = "";
-
-      setTimeout(() => {
-        modal = false;
-        list_value.can_discard = true;
-      }, 1000);
-    }, 1500);
-  }
-
   function add() {
     discardItem["use"] = true;
     ind += 1;
@@ -79,6 +66,40 @@
     discardItem["use"] = false;
     ind += 1;
     isDiscard();
+  }
+
+  let sorteds = [];
+  let pair_one;
+  let pair_two;
+  let one_ind = 0;
+  let two_ind = 1;
+
+  function monkeySort() {
+    list_value.can_discard = false;
+    arr = list_value.items;
+    setTimeout(() => (title_message = ""), 1500);
+
+    if (list_value.items.length === sorteds.length) {
+      console.log(sorteds);
+    } else {
+      pair_one = arr[one_ind].title;
+      pair_two = arr[two_ind].title;
+
+      isSorted(pair_one, pair_two);
+    }
+  }
+
+  function isSorted(one, two) {
+    let is_one = sorteds.some((el) => el === one);
+    let is_two = sorteds.some((el) => el === two);
+
+    if (!is_one) one_ind += 1;
+    if (!is_two) two_ind += 1;
+  }
+
+  function isBetter(item) {
+    sorteds = [...sorteds, item];
+    monkeySort();
   }
 </script>
 
@@ -127,6 +148,8 @@
     opacity: 0;
     pointer-events: none;
     transition: 500ms;
+    border-radius: 10px;
+    overflow: hidden;
 
     .discard {
       h1 {
@@ -142,8 +165,67 @@
 
   .title {
     background: $pri;
+    color: $bg;
     text-align: center;
     z-index: 2;
+  }
+
+  .monkey-text {
+    position: relative;
+    background: $pri;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: 1px solid $border;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    z-index: 1;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -7px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 14px;
+      height: 14px;
+      background: $pri;
+      transform: rotate(45deg);
+      border-right: 1px solid $border;
+      border-bottom: 1px solid $border;
+    }
+  }
+
+  h1 {
+    z-index: 1;
+  }
+
+  .pair-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .col {
+      transition: 200ms;
+
+      &:hover {
+        cursor: pointer;
+        background: rgba($pri, 0.3);
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+
+      .col {
+        width: 100%;
+        height: 50%;
+      }
+    }
   }
 
   .active {
@@ -164,11 +246,15 @@
 
       <button class="sort-btn pri semi" on:click={startSorting}>EMPEZAR</button>
     {:else}
-      <p class="no-match">No hay ningun item en esta lista o la lista no existe</p>
+      <p class="no-match">
+        No hay ningun item en esta lista o la lista no existe
+      </p>
     {/if}
 
     <div class="modal col w100 h100 fcenter" class:active={modal}>
-      <h2 class="title row w100 h100 fcenter p20" class:active={title_message}>{title_message}</h2>
+      <h2 class="title row w100 h100 fcenter p20" class:active={title_message}>
+        {title_message}
+      </h2>
       {#if list_value.can_discard}
         <div class="discard col w100 h100 fcenter p20">
           <h1>{discardItem.title}</h1>
@@ -179,7 +265,16 @@
         </div>
       {:else}
         <div class="discard col w100 h100 fcenter">
+          <span class="monkey-text">¿Cual prefieres?</span>
           <h1>🐵</h1>
+          <div class="pair-wrapper row w100 h100">
+            <div class="col w50 h100 p20 fcenter" on:click={isBetter(pair_one)}>
+              {pair_one}
+            </div>
+            <div class="col w50 h100 p20 fcenter" on:click={isBetter(pair_two)}>
+              {pair_two}
+            </div>
+          </div>
         </div>
       {/if}
     </div>
