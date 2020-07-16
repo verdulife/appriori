@@ -5,6 +5,7 @@
   let newHide = true;
   let lists_values;
   let plainList;
+  let can_discard = false;
 
   const unsubscribe = lists.subscribe((value) => {
     lists_values = value;
@@ -28,8 +29,11 @@
 
     let list = {
       items: arr,
+      can_discard: can_discard,
       created: Date.now(),
     };
+
+    console.log(list);
 
     lists.update((n) => [...n, list]);
     plainList = "";
@@ -55,6 +59,10 @@
     resize: none;
   }
 
+  input {
+    margin-right: 5px;
+  }
+
   h2 {
     margin: 40px 0 20px 0;
   }
@@ -69,6 +77,11 @@
     {:else}
       <textarea class="out semi p20" bind:value={plainList} />
       <button class="pri semi" on:click={makeList}>ENLISTAR</button>
+      
+      <div class="row w100 fcenter m20">
+        <input type="checkbox" id="can_discard" bind:checked={can_discard} />
+        <label for="can_discard">Se pueden descartar items</label>
+      </div>
     {/if}
 
     {#if lists_values.length}
@@ -76,7 +89,7 @@
 
       <div class="row w100 jcenter">
         {#each lists_values as list}
-          <List items={list.items} created={list.created} />
+          <List items={list.items} created={list.created} discard={list.can_discard} />
         {/each}
       </div>
     {/if}

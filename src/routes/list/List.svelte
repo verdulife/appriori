@@ -8,7 +8,9 @@
   };
   let unsubscribe;
 
+  let arr;
   let modal = false;
+  let title_message;
   let discardItem = {
     title: "",
     use: false,
@@ -32,26 +34,51 @@
   let ind = 0;
   function startSorting() {
     modal = true;
-    let arr = list_value.items;
 
+    if (list_value.can_discard) {
+      title_message = "Vamos a descartar algunos items de la lista (Si quieres)";
+      isDiscard();
+    } else {
+      title_message = "¡A priorizar sea dicho!";
+      monkeySort();
+    }
+  }
+
+  function isDiscard() {
+    setTimeout(() => (title_message = ""), 1500);
+
+    arr = list_value.items;
     if (arr[ind]) {
       discardItem = arr[ind];
     } else {
-      console.log(arr);
-      modal = false;
+      monkeySort();
     }
+  }
+
+  function monkeySort() {
+    console.log(arr);
+    list_value.can_discard = false;
+
+    setTimeout(() => {
+      title_message = "";
+
+      setTimeout(() => {
+        modal = false;
+        list_value.can_discard = true;
+      }, 1000);
+    }, 1500);
   }
 
   function add() {
     discardItem["use"] = true;
     ind += 1;
-    startSorting();
+    isDiscard();
   }
 
   function discard() {
     discardItem["use"] = false;
     ind += 1;
-    startSorting();
+    isDiscard();
   }
 </script>
 
@@ -91,7 +118,8 @@
     margin-top: 30%;
   }
 
-  .modal {
+  .modal,
+  .title {
     position: fixed;
     top: 0;
     left: 0;
@@ -101,11 +129,21 @@
     transition: 500ms;
 
     .discard {
+      h1 {
+        text-align: center;
+      }
+
       button {
         width: 40%;
         max-width: 200px;
       }
     }
+  }
+
+  .title {
+    background: $pri;
+    text-align: center;
+    z-index: 2;
   }
 
   .active {
@@ -124,19 +162,26 @@
         </div>
       {/each}
 
-      <button class="sort-btn pri semi" on:click={startSorting}>MOKEY SORT</button>
+      <button class="sort-btn pri semi" on:click={startSorting}>EMPEZAR</button>
     {:else}
       <p class="no-match">No hay ningun item en esta lista o la lista no existe</p>
     {/if}
 
     <div class="modal col w100 h100 fcenter" class:active={modal}>
-      <div class="discard col w100 h100 fcenter">
-        <h1>{discardItem.title}</h1>
-        <div class="row w100 jcenter">
-          <button class="succ semi m5" on:click={add}>Añadir</button>
-          <button class="err semi m5" on:click={discard}>Descartar</button>
+      <h2 class="title row w100 h100 fcenter p20" class:active={title_message}>{title_message}</h2>
+      {#if list_value.can_discard}
+        <div class="discard col w100 h100 fcenter p20">
+          <h1>{discardItem.title}</h1>
+          <div class="row w100 jcenter">
+            <button class="succ semi m5" on:click={add}>Añadir</button>
+            <button class="err semi m5" on:click={discard}>Descartar</button>
+          </div>
         </div>
-      </div>
+      {:else}
+        <div class="discard col w100 h100 fcenter">
+          <h1>🐵</h1>
+        </div>
+      {/if}
     </div>
   </div>
 </div>
