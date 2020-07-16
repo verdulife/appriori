@@ -33,8 +33,6 @@
       created: Date.now(),
     };
 
-    console.log(list);
-
     lists.update((n) => [...n, list]);
     plainList = "";
     togNew();
@@ -42,30 +40,9 @@
 </script>
 
 <style lang="scss">
-  .home {
-    @media (max-width: 600px) {
-      padding: 20px;
-    }
-  }
-
-  h1 {
-    margin-bottom: 20px;
-  }
-
-  textarea {
-    width: 100%;
-    height: 120px;
-    margin-bottom: 10px;
-    resize: none;
-  }
-
-  input {
-    margin-right: 5px;
-  }
-
-  h2 {
-    margin: 40px 0 20px 0;
-  }
+  @import "../../assets/vars";
+  @import "./Home";
+  @import "./Home.m";
 </style>
 
 <div class="scroll">
@@ -77,7 +54,7 @@
     {:else}
       <textarea class="out semi p20" bind:value={plainList} />
       <button class="pri semi" on:click={makeList}>ENLISTAR</button>
-      
+
       <div class="row w100 fcenter m20">
         <input type="checkbox" id="can_discard" bind:checked={can_discard} />
         <label for="can_discard">Se pueden descartar items</label>

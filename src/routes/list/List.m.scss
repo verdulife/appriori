@@ -1,0 +1,14 @@
+@media (max-width: 600px) {
+  .list {
+    padding: 20px;
+  }
+
+  .pair-wrapper {
+    flex-direction: column;
+
+    .col {
+      width: 100%;
+      height: 50%;
+    }
+  }
+}

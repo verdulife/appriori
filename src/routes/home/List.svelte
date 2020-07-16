@@ -1,38 +1,13 @@
 <script>
-  import { Link } from "svelte-routing";
-
   export let items;
   export let created;
   export let discard;
 </script>
 
 <style lang="scss">
-  @import "verdu/scss@dom/vars";
-
-  .list-wrapper {
-    width: 40%;
-    border: 1px solid $border;
-    border-radius: 10px;
-
-    @media (max-width: 600px) {
-      width: 100%;
-    }
-
-    h3,
-    p {
-      color: $base;
-
-      b {
-        font-size: 12px;
-        text-transform: uppercase;
-        color: $warning
-      }
-    }
-
-    Link {
-      width: 100%;
-    }
-  }
+  @import "../../assets/vars";
+  @import "./List";
+  @import "./List.m";
 </style>
 
 <a class="list-wrapper col p20 m5" href="/list/{created}">

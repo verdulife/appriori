@@ -16,21 +16,9 @@
 </script>
 
 <style lang="scss">
-  @import "verdu/scss@dom/vars";
-
-  main {
-    flex-direction: column-reverse;
-  }
-
-  nav {
-    border-top: 1px solid $border;
-
-    a {
-      width: 40%;
-      max-width: 300px;
-      text-align: center;
-    }
-  }
+  @import "./assets/vars";
+  @import "./App";
+  @import "./App.m";
 </style>
 
 <main class="col" use:links>

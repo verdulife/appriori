@@ -1,0 +1,111 @@
+h1 {
+  margin-bottom: 20px;
+}
+
+.card {
+  border: 1px solid $border;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  overflow: hidden;
+
+  p {
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.sort-btn {
+  margin-top: 20px;
+}
+
+.no-match {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 30%;
+}
+
+.modal,
+.title {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: $bg;
+  opacity: 0;
+  pointer-events: none;
+  transition: 500ms;
+  border-radius: 10px;
+  overflow: hidden;
+
+  .discard {
+    h1 {
+      text-align: center;
+    }
+
+    button {
+      width: 40%;
+      max-width: 200px;
+    }
+  }
+}
+
+.title {
+  background: $pri;
+  color: $bg;
+  text-align: center;
+  z-index: 2;
+}
+
+.monkey-text {
+  position: relative;
+  background: $pri;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: 1px solid $border;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  z-index: 1;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 14px;
+    height: 14px;
+    background: $pri;
+    transform: rotate(45deg);
+    border-right: 1px solid $border;
+    border-bottom: 1px solid $border;
+  }
+}
+
+h1 {
+  z-index: 1;
+}
+
+.pair-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  overflow: hidden;
+
+  .col {
+    transition: 200ms;
+
+    &:hover {
+      cursor: pointer;
+      background: rgba($pri, 0.3);
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}
+
+.active {
+  opacity: 1;
+  pointer-events: all;
+}
