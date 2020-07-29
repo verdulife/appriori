@@ -8,8 +8,8 @@ export function ComparisonMatrix(items) {
   self.explicitCount = 0;
 
   _.each(self.items, function (item) {
-    self.matrix[item.title] = {};
-    self.matrix[item.title][item.title] = "=";
+    self.matrix = {};
+    self.matrix[item.title] = "=";
   });
 
   self.opposite = function (value) {

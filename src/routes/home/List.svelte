@@ -11,7 +11,7 @@
 </style>
 
 <a class="list-wrapper col p20 m5" href="/list/{created}">
-  <h3>{new Date(created).toDateString()}</h3>
+  <h3>{new Date(created).toLocaleString()}</h3>
   <p>
     {items.length} items en la lista ·
     <b>{discard ? 'Descartable' : 'Fija'}</b>
